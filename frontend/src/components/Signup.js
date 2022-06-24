@@ -2,6 +2,8 @@ import { auth } from '../firebase/Firebase';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import React, { useState } from 'react'
 import axios from 'axios'
+import { Navigate } from "react-router-dom";
+
 
 function Signup() {
     const [otp, setotp] = useState('')
@@ -59,11 +61,13 @@ function Signup() {
             contact: userData.contact,
             email: userData.email
         }).then((response) => {
-            console.log(response)
+            console.log(response.data)
+            window.location.replace('/login')
         }).catch((err) => {
             console.log(err.response.data.message)
         })
     }
+
     return (
         <section className="vh-100" style={{ "backgroundColor": "#eee" }}>
             <div className="container h-100">
@@ -105,7 +109,6 @@ function Signup() {
                                             <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                                 <button type="button" className="btn btn-primary btn-lg" id='sign-in-button' onClick={SignUp}>Sign Up</button>
                                             </div>
-
 
                                         </div>
 

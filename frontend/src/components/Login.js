@@ -13,29 +13,25 @@ function Login() {
         e.preventDefault();
 
         if (Contact === "" || Contact.length < 10) return;
+        const appVerifier = window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
+            'size': 'invisible',
+            'callback': (response) => {
+                // reCAPTCHA solved, allow signInWithPhoneNumber.
+                this.onSignInSubmit();
+            }
+        }, auth);
+        signInWithPhoneNumber(auth, "+91" + Contact, appVerifier)
+            .then((result) => {
 
-        const result =login(Contact)
-        if (!result) {
+                // SMS sent. Prompt user to type the code from the message, then sign the
+                // user in with confirmationResult.confirm(code).
+                setfinal(result);
+                console.log("code sent")
+                setshow(true);
+            }).catch((error) => {
+                alert(error)
+            });
 
-            const appVerifier = window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
-                'size': 'invisible',
-                'callback': (response) => {
-                    // reCAPTCHA solved, allow signInWithPhoneNumber.
-                    this.onSignInSubmit();
-                }
-            }, auth);
-            signInWithPhoneNumber(auth, "+91" + Contact, appVerifier)
-                .then((result) => {
-
-                    // SMS sent. Prompt user to type the code from the message, then sign the
-                    // user in with confirmationResult.confirm(code).
-                    setfinal(result);
-                    console.log("code sent")
-                    setshow(true);
-                }).catch((error) => {
-                    alert(error)
-                });
-        }
     }
 
     //OTP Verification

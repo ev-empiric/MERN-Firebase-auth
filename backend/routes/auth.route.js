@@ -7,12 +7,12 @@ exports.signin = async (req, res) => {
         if (!requestData.contact)
             res.status(400).send({ message: "All input is required" });
 
-        const Contact = '+1 ' + requestData.contact
-        const usercontact = await User.findOne({ Contact });
+        const contact = '+1 ' + requestData.contact
+        const usercontact = await User.findOne({ contact });
         if (usercontact) {
-            const userId = requestData._id 
-            const user = await User.findOne({ userId });
-
+            
+            const _id = requestData._id
+            const user = await User.findOne({ _id });
             if (!user)
                 return res.status(409).send({ message: "User Not Exist. Please Register First" });
 
